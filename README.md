@@ -19,31 +19,20 @@
 
 ---
 
-## 🧭 支持站点
-
-脚本默认支持以下 Amazon 域名（也可自行扩展）：
-
-> `.fr` `.de` `.es` `.it` `.nl` `.se` `.co.uk` `.com` `.ca` `.in` `.pl` `.jp` `.com.mx` `.com.tr` `.com.be`
-
----
-
 ## 🚀 安装方式
 
 1. 确保浏览器已安装 **Tampermonkey** 扩展  
-   - Chrome：[Tampermonkey 官网](https://www.tampermonkey.net/)  
-   - Edge / Brave 等浏览器同样兼容  
+   - [Tampermonkey 官网](https://www.tampermonkey.net/)
 
 2. 点击下方链接直接安装脚本：
 
-   👉 [**安装 Amazon Order Tools**](https://raw.githubusercontent.com/maxwellvoronov/amazon-order-tools/main/amazon-order-tools.user.js)
+   👉 [**安装 Amazon Order Tools**](https://raw.githubusercontent.com/dwzrlp/amazon-order-tools/main/amazon-order-tools.user.js)
 
 3. 打开任意 Amazon 的 “Vos commandes / Your Orders / 订单历史” 页面即可看到新功能。  
 
 ---
 
 ## 🖼️ 截图预览
-
-> 🔹 以下为效果图示意（可替换为你自己的截图）：
 
 | 功能 | 示例 |
 |------|------|
@@ -65,7 +54,7 @@
 
 - **Author:** Maxwell Voronov  
 - **License:** MIT  
-- **Repository:** [github.com/maxwellvoronov/amazon-order-tools](https://github.com/maxwellvoronov/amazon-order-tools)
+- **Repository:** [github.com/dwzrlp/amazon-order-tools](https://github.com/dwzrlp/amazon-order-tools)
 
 ---
 
@@ -73,20 +62,9 @@
 
 | 版本 | 日期 | 说明 |
 |------|------|------|
-| 2.22 | 2025-11-12 | 发布稳定版，仅保留「修改金额 / 隐藏显示收件人」功能，优化加载性能 |
-| 2.21 | 2025-11-10 | 改进自动匹配 Amazon 多站点、增加多语言支持 |
+| 2.22 | 2025-11-12 | 稳定版，仅保留「修改金额 / 隐藏显示收件人」功能 |
+| 2.21 | 2025-11-10 | 增加多语言与布局优化 |
 | 2.20 | 2025-11-08 | 初版发布 |
-
----
-
-## 🧩 其他
-
-如果你想自定义：
-- 加入自动读取详情页金额；
-- 修改 UI 按钮位置；
-- 或适配其他站点（如 Amazon Business）；
-
-可以在脚本顶部添加或修改 `@match` 规则后自行部署。
 
 ---
 
