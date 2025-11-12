@@ -5,12 +5,12 @@
 // @description     Modify “Total” amount and hide/show recipient block on the latest Amazon order.
 // @description:fr  Modifier le montant « Total » et afficher/masquer le bloc destinataire pour la dernière commande Amazon.
 // @description:zh  在最新的 Amazon 订单卡片上，修改「Total」金额、隐藏/显示收件信息块。
-// @namespace       https://github.com/maxwellvoronov
+// @namespace       https://github.com/dwzrlp
 // @author          Maxwell Voronov
 // @version         2.22
 // @license         MIT
-// @homepageURL     https://github.com/maxwellvoronov/amazon-order-tools
-// @supportURL      https://github.com/maxwellvoronov/amazon-order-tools/issues
+// @homepageURL     https://github.com/dwzrlp/amazon-order-tools
+// @supportURL      https://github.com/dwzrlp/amazon-order-tools/issues
 // @icon            https://github.githubassets.com/favicons/favicon.png
 // @match           https://www.amazon.co.jp/*
 // @match           https://www.amazon.co.uk/*
@@ -31,8 +31,8 @@
 // @grant           none
 // @noframes
 // @compatible      chrome Tested on Chrome 120 + Tampermonkey 4.20
-// @downloadURL     https://raw.githubusercontent.com/maxwellvoronov/amazon-order-tools/main/amazon-order-tools.user.js
-// @updateURL       https://raw.githubusercontent.com/maxwellvoronov/amazon-order-tools/main/amazon-order-tools.user.js
+// @downloadURL     https://raw.githubusercontent.com/dwzrlp/amazon-order-tools/main/amazon-order-tools.user.js
+// @updateURL       https://raw.githubusercontent.com/dwzrlp/amazon-order-tools/main/amazon-order-tools.user.js
 // ==/UserScript==
 
 (function () {
