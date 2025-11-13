@@ -11,7 +11,7 @@
 // @license         MIT
 // @homepageURL     https://github.com/dwzrlp/amazon-order-tools
 // @supportURL      https://github.com/dwzrlp/amazon-order-tools/issues
-// @icon            https://github.githubassets.com/favicons/favicon.png
+// @icon            https://www.amazon.com/favicon.ico
 // @match           https://www.amazon.co.jp/*
 // @match           https://www.amazon.co.uk/*
 // @match           https://www.amazon.com/*
