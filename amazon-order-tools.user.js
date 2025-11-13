@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name            Order Tools
-// @name:fr         Outils de Commandes
-// @name:zh         订单工具
+// @name            Amazon 订单工具
+// @name:fr         Outils de Commandes Amazon
+// @name:zh         Amazon 订单工具
 // @description     Modify “Total” amount, hide/show recipient block, and click-to-copy order ID on Amazon orders.
 // @description:fr  Modifier le montant « Total », afficher/masquer le bloc destinataire et copier le numéro de commande d’un clic.
 // @description:zh  在 Amazon 订单页面修改「Total」金额、隐藏/显示收件信息块，并支持点击复制订单号。
