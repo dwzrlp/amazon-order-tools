@@ -280,16 +280,28 @@
     return null;
   }
 
-  function formatLikeSample(sampleText, inputNumberString) {
-    const numberBlockRegex = /[-+]?[\d\s.,'’´` \u00A0\u202F]+/;
-    const m = sampleText.match(numberBlockRegex);
-    if (m) {
-      const before = sampleText.slice(0, m.index);
-      const after = sampleText.slice(m.index + m[0].length);
-      return before + inputNumberString + after;
-    }
-    return inputNumberString + NBSP + '€';
+function formatLikeSample(sampleText, inputNumberString) {
+  const numberBlockRegex = /[-+]?[\d\s.,'’´` \u00A0\u202F]+/;
+  const m = sampleText.match(numberBlockRegex);
+  let result;
+
+  if (m) {
+    const before = sampleText.slice(0, m.index);
+    const after = sampleText.slice(m.index + m[0].length);
+    result = before + inputNumberString + after;
+  } else {
+    // 没有可用样本时，直接用「数字 + 不间断空格 + €」
+    result = inputNumberString + NBSP + '€';
   }
+
+  // **关键一步**：无论原本有没有空格、有几个空格，都规范成「数字 + 不间断空格 + €」
+  result = result.replace(
+    /([\d.,]+)\s*€/,
+    (_, num) => num + NBSP + '€'
+  );
+
+  return result;
+}
 
   function setTotalAmountSmart(newNumericString) {
     const card = latestCard();
