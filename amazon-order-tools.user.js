@@ -115,29 +115,33 @@
 
   const style = document.createElement('style');
   style.textContent = `
-    .amz-ordertools-bar {
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
-      margin-top:10px; margin-bottom:26px;
-    }
-    .amz-ordertools-bar li { list-style:none; }
-    .amz-toast {
-      position:fixed; right:20px; bottom:30px;
-      background:#111; color:#fff; padding:10px 14px; border-radius:6px;
-      opacity:.95; z-index:2147483647; font-size:13px;
-    }
-    .amz-order-copy-tooltip {
-      position:absolute;
-      background:red;
-      color:#fff;
-      padding:8px;
-      border-radius:8px;
-      font-weight:bold;
-      z-index:2147483647;
-      opacity:0;
-      transition:opacity .15s ease-out;
-      pointer-events:none;
-      font-size:12px;
-    }
+.amz-ordertools-bar {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  margin-top:10px;
+  margin-bottom:80px !important; /* 这里加大距离 */
+}
+.amz-ordertools-bar li { list-style:none; }
+.amz-toast {
+  position:fixed; right:20px; bottom:30px;
+  background:#111; color:#fff; padding:10px 14px; border-radius:6px;
+  opacity:.95; z-index:2147483647; font-size:13px;
+}
+.amz-order-copy-tooltip {
+  position:absolute;
+  background:red;
+  color:#fff;
+  padding:8px;
+  border-radius:8px;
+  font-weight:bold;
+  z-index:2147483647;
+  opacity:0;
+  transition:opacity .15s ease-out;
+  pointer-events:none;
+  font-size:12px;
+}
   `;
   document.head.appendChild(style);
 
