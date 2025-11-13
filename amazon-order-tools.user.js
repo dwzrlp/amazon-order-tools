@@ -7,7 +7,7 @@
 // @description:zh  在 Amazon 订单页面修改「Total」金额、隐藏/显示收件信息块，并支持点击复制订单号。
 // @namespace       https://github.com/dwzrlp
 // @author          Maxwell Voronov
-// @version         2.25
+// @version         2.26
 // @license         MIT
 // @homepageURL     https://github.com/dwzrlp/amazon-order-tools
 // @supportURL      https://github.com/dwzrlp/amazon-order-tools/issues
