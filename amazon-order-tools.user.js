@@ -7,7 +7,7 @@
 // @description:zh  在 Amazon 订单页面修改「Total」金额、隐藏/显示收件信息块，并支持点击复制订单号。
 // @namespace       https://github.com/dwzrlp
 // @author          Maxwell Voronov
-// @version         2.26
+// @version         2.28
 // @license         MIT
 // @homepageURL     https://github.com/dwzrlp/amazon-order-tools
 // @supportURL      https://github.com/dwzrlp/amazon-order-tools/issues
@@ -121,7 +121,7 @@
   gap:10px;
   align-items:center;
   margin-top:10px;
-  margin-bottom:80px !important; /* 这里加大距离 */
+  margin-bottom:80px !important;
 }
 .amz-ordertools-bar li { list-style:none; }
 .amz-toast {
@@ -142,6 +142,54 @@
   pointer-events:none;
   font-size:12px;
 }
+
+/* 自定义金额输入弹窗 */
+.amz-price-dialog-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 2147483646;
+  display: flex;
+  align-items: flex-start;   /* 原来是 center，改成顶部对齐 */
+  justify-content: center;
+  padding-top: 80px;         /* 控制距页面顶部的距离，可按喜好调 50~120px */
+}
+.amz-price-dialog {
+  background: #fff;
+  padding: 14px 16px;
+  border-radius: 8px;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  font-size: 13px;
+}
+.amz-price-dialog label {
+  display: block;
+  margin-bottom: 6px;
+}
+.amz-price-dialog input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  margin-bottom: 10px;
+}
+.amz-price-dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.amz-price-dialog button {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f3f3f3;
+  cursor: pointer;
+}
+.amz-price-dialog button.amz-ok {
+  border-color: #007185;
+  background: #007185;
+  color: #fff;
+}
   `;
   document.head.appendChild(style);
 
@@ -151,6 +199,73 @@
     d.textContent = msg;
     document.body.appendChild(d);
     setTimeout(() => d.remove(), t);
+  }
+
+  // 自定义金额输入弹窗（替代 window.prompt）
+  function openPriceDialog(defaultValue, onOk, onCancel) {
+    const mask = document.createElement('div');
+    mask.className = 'amz-price-dialog-mask';
+
+    const box = document.createElement('div');
+    box.className = 'amz-price-dialog';
+
+    const label = document.createElement('label');
+    label.textContent = T.enterPrice;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = defaultValue || '';
+
+    const btnRow = document.createElement('div');
+    btnRow.className = 'amz-price-dialog-buttons';
+
+    const btnCancel = document.createElement('button');
+    btnCancel.type = 'button';
+    btnCancel.textContent =
+      CURRENT_LANG === 'fr' ? 'Annuler' :
+      CURRENT_LANG === 'en' ? 'Cancel' : '取消';
+
+    const btnOk = document.createElement('button');
+    btnOk.type = 'button';
+    btnOk.className = 'amz-ok';
+    btnOk.textContent =
+      CURRENT_LANG === 'fr' ? 'Valider' :
+      CURRENT_LANG === 'en' ? 'OK' : '确定';
+
+    function close() {
+      mask.remove();
+    }
+
+    btnCancel.addEventListener('click', () => {
+      close();
+      onCancel && onCancel();
+    });
+
+    btnOk.addEventListener('click', () => {
+      const val = input.value;
+      close();
+      onOk && onOk(val);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        btnOk.click();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        btnCancel.click();
+      }
+    });
+
+    box.appendChild(label);
+    box.appendChild(input);
+    btnRow.appendChild(btnCancel);
+    btnRow.appendChild(btnOk);
+    box.appendChild(btnRow);
+    mask.appendChild(box);
+    document.body.appendChild(mask);
+
+    setTimeout(() => input.focus(), 0);
   }
 
   // ---------- 订单号点击复制 ----------
@@ -171,7 +286,7 @@
 
     const orderId = match[0];
 
-    // 复制到剪贴板
+    // 复制到剪贴板（@grant none 简单兼容实现）
     const textarea = document.createElement('textarea');
     textarea.value = orderId;
     document.body.appendChild(textarea);
@@ -280,28 +395,28 @@
     return null;
   }
 
-function formatLikeSample(sampleText, inputNumberString) {
-  const numberBlockRegex = /[-+]?[\d\s.,'’´` \u00A0\u202F]+/;
-  const m = sampleText.match(numberBlockRegex);
-  let result;
+  function formatLikeSample(sampleText, inputNumberString) {
+    const numberBlockRegex = /[-+]?[\d\s.,'’´` \u00A0\u202F]+/;
+    const m = sampleText.match(numberBlockRegex);
+    let result;
 
-  if (m) {
-    const before = sampleText.slice(0, m.index);
-    const after = sampleText.slice(m.index + m[0].length);
-    result = before + inputNumberString + after;
-  } else {
-    // 没有可用样本时，直接用「数字 + 不间断空格 + €」
-    result = inputNumberString + NBSP + '€';
+    if (m) {
+      const before = sampleText.slice(0, m.index);
+      const after = sampleText.slice(m.index + m[0].length);
+      result = before + inputNumberString + after;
+    } else {
+      // 没有可用样本时，直接用「数字 + 不间断空格 + €」
+      result = inputNumberString + NBSP + '€';
+    }
+
+    // 统一成「数字 + 不间断空格 + €」
+    result = result.replace(
+      /([\d.,]+)\s*€/,
+      (_, num) => num + NBSP + '€'
+    );
+
+    return result;
   }
-
-  // **关键一步**：无论原本有没有空格、有几个空格，都规范成「数字 + 不间断空格 + €」
-  result = result.replace(
-    /([\d.,]+)\s*€/,
-    (_, num) => num + NBSP + '€'
-  );
-
-  return result;
-}
 
   function setTotalAmountSmart(newNumericString) {
     const card = latestCard();
@@ -389,26 +504,29 @@ function formatLikeSample(sampleText, inputNumberString) {
     const btnEdit = createPrimaryButton(T.modifyTotal, () => {
       const span = findTotalSpan(latestCard());
       const m = span?.textContent.match(/[\d\s.,'’´` \u00A0\u202F]+/);
-      const defVal = m
-        ? m[0].replace(/[^\d.,]/g, '').trim()
-        : '';
-      let v = prompt(
-        T.enterPrice,
-        sessionStorage.getItem('amz_total_override_latest') || defVal || ''
-      );
-      if (v === null) return;
-      v = v.trim();
-      if (!/^[\d\s.,]+$/.test(v)) {
-        toast(T.invalid);
-        return;
-      }
-      v = v.replace(/\s+/g, '');
-      if (setTotalAmountSmart(v)) {
-        sessionStorage.setItem('amz_total_override_latest', v);
-        toast(T.okPrice);
-      } else {
-        toast(T.noTotal);
-      }
+      const defVal = m ? m[0].replace(/[^\d.,]/g, '').trim() : '';
+
+      const last = sessionStorage.getItem('amz_total_override_latest');
+      const initVal = '';
+
+      openPriceDialog(initVal, (vRaw) => {
+        if (vRaw == null) return;
+        let v = vRaw.trim();
+        if (!v) return;
+
+        if (!/^[\d\s.,]+$/.test(v)) {
+          toast(T.invalid);
+          return;
+        }
+        v = v.replace(/\s+/g, '');
+
+        if (setTotalAmountSmart(v)) {
+          sessionStorage.setItem('amz_total_override_latest', v);
+          toast(T.okPrice);
+        } else {
+          toast(T.noTotal);
+        }
+      });
     });
 
     const hidden =
